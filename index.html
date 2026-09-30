@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Skyward — Browser Flight Sim</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="style.css">
+<script type="importmap">{"imports":{"three":"./vendor/three.module.js"}}</script>
+</head>
+<body>
+<canvas id="c"></canvas>
+
+<div id="hud" class="hidden">
+  <canvas id="compass" class="panel" width="360" height="40"></canvas>
+  <div id="camMode"></div>
+  <div id="mission" class="panel">
+    <div class="label">PILOT</div><div id="pilot">CAMERON PRICE</div>
+    <div class="label">PLANE</div><div id="planeName" class="val"></div>
+    <div class="label">SCORE</div><div id="score" class="val gold">0</div>
+    <div class="label">RINGS</div><div id="rings">0 / 12</div>
+    <div class="label">TIME</div><div id="timer">0:00.0</div>
+    <div class="label">BEST</div><div id="best">—</div>
+    <div class="label">TANKS</div><div id="tanks" class="val">0</div>
+    <div class="label">TROOPS</div><div id="troops" class="val">0</div>
+    <div class="label">BANDITS</div><div id="bandits" class="val">0</div>
+    <div class="label">GOALS</div><div id="goals" class="val">0</div>
+  </div>
+  <div class="gauge left panel">
+    <div class="label">AIRSPEED</div>
+    <div id="speed" class="big">0</div>
+    <div class="unit">KNOTS</div>
+    <div class="throttle"><div id="throttleFill"></div></div>
+    <div class="unit">THROTTLE <span id="thr">0</span>%</div>
+    <div class="throttle"><div id="hpFill"></div></div>
+    <div class="unit">ARMOR <span id="hp">100</span>%</div>
+    <div class="unit sep">BOMBS <span id="bombs">0</span></div>
+    <div class="unit" id="nozRow">NOZZLES <span id="noz">0</span>&deg;</div>
+  </div>
+  <div class="gauge right panel">
+    <div class="label">ALTITUDE</div>
+    <div id="alt" class="big">0</div>
+    <div class="unit">FEET</div>
+    <div class="unit sep">V/S <span id="vs">0</span> fpm</div>
+    <div class="unit">AGL <span id="agl">0</span> ft</div>
+  </div>
+  <canvas id="horizon" width="160" height="160"></canvas>
+  <canvas id="minimap" width="180" height="180"></canvas>
+  <div id="marker"><div class="diamond"></div><div class="arrow"></div><div id="markerDist"></div></div>
+  <div id="hitFlash"></div>
+  <div id="warn"></div>
+  <div id="msg"></div>
+  <div id="hint" class="panel"></div>
+  <div id="keysHud">
+    <div><kbd>Shift</kbd><kbd>Z</kbd> Throttle</div>
+    <div><kbd>S</kbd><kbd>W</kbd> Pitch up / down</div>
+    <div><kbd>A</kbd><kbd>D</kbd> Roll &amp; turn</div>
+    <div><kbd>Q</kbd><kbd>E</kbd> Rudder</div>
+    <div><kbd>Space</kbd> Soccer balls</div>
+    <div><kbd>X</kbd> Drop bomb</div>
+    <div id="vtolKey"><kbd>V</kbd> Hover mode</div>
+    <div><kbd>B</kbd> Brakes <kbd>C</kbd> Camera</div>
+    <div><kbd>R</kbd> Restart <kbd>P</kbd> Pause</div>
+    <div class="dim"><kbd>H</kbd> hide these keys</div>
+  </div>
+</div>
+
+<div id="overlay">
+  <div class="card panel">
+    <h1>SKYWARD</h1>
+    <p class="sub">A browser flight simulator, built by Devin</p>
+    <p class="pilot">Pilot: <b>Captain Cameron Price</b></p>
+    <div class="hangar"><div class="hlabel">CHOOSE YOUR AIRCRAFT <span>(or press 1&ndash;5 any time)</span></div><div id="planes"></div></div>
+    <div class="spawnrow"><span class="hlabel">START FROM <span>(K)</span></span><div id="spawn"><button data-s="airfield">Price Intl Airport</button><button data-s="carrier">USS Price carrier</button></div></div>
+    <p class="goal">Fly the <b>12 rings</b>, <b>bomb the enemy tanks and soldiers</b> in their camps, and shoot down the <b>bandits</b> that come hunting you with soccer balls. Land on the runway or trap on the carrier to rearm and repair.</p>
+    <div class="keys">
+      <div><kbd>Shift</kbd><kbd>Z</kbd><span>Throttle up / down</span></div>
+      <div><kbd>S</kbd><kbd>&darr;</kbd><span>Pull up (nose up)</span></div>
+      <div><kbd>W</kbd><kbd>&uarr;</kbd><span>Push (nose down)</span></div>
+      <div><kbd>A</kbd><kbd>D</kbd><span>Roll left / right</span></div>
+      <div><kbd>Q</kbd><kbd>E</kbd><span>Rudder / steer</span></div>
+      <div><kbd>B</kbd><span>Wheel brakes</span></div>
+      <div><kbd>C</kbd><span>Chase / cockpit / flyby</span></div>
+      <div><kbd>I</kbd><span>Invert pitch <em id="invState">(off)</em></span></div>
+      <div><kbd>Space</kbd><kbd>F</kbd><span>Fire soccer balls</span></div>
+      <div><kbd>X</kbd><span>Drop bomb</span></div>
+      <div><kbd>V</kbd><span>Harrier hover mode</span></div>
+      <div><kbd>1</kbd>&ndash;<kbd>5</kbd><span>Switch aircraft</span></div>
+      <div><kbd>R</kbd><span>Restart</span></div>
+      <div><kbd>H</kbd><kbd>K</kbd><span>Key overlay / start spot</span></div>
+      <div><kbd>P</kbd><kbd>M</kbd><span>Pause / mute</span></div>
+    </div>
+    <button id="start">Click to fly</button>
+    <p class="tip" id="tip"></p>
+  </div>
+</div>
+
+<script type="module" src="main.js"></script>
+</body>
+</html>
